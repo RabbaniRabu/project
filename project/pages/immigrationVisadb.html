@@ -1,0 +1,46 @@
+<?php
+// Replace these variables with your actual database credentials
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "studentdb";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Collect form data
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $dob = $_POST['dob'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $city = $_POST['city'];
+    $visa_type = $_POST['visa_type'];
+    $marital_status = $_POST['true'];
+    $comment = $_POST['comment'];
+
+    // Handle file upload - code for file upload remains the same
+
+    // SQL to insert form data into a table (adjust table and column names as needed)
+    $sql = "INSERT INTO demo (first_name, last_name, dob, email, phone, city, visa_type, marital_status, comment)
+    VALUES ('$first_name', '$last_name', '$dob', '$email', '$phone', '$city', '$visa_type', '$marital_status', '$comment')";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "New record created successfully";
+        // Redirect to a success page
+        header("Location: success.html");
+        exit();
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+// Close the connection
+$conn->close();
+?>
